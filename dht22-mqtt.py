@@ -72,7 +72,10 @@ except ModuleNotFoundError:
 
 
 def read_dht22(gpio_pin):
-    return dht.read_retry(dht.DHT22, gpio_pin)
+    h, t = dht.read_retry(dht.DHT22, gpio_pin)
+    h = round(h, 1)
+    t = round(t, 1)
+    return h, t
 
 
 def main():
@@ -114,10 +117,10 @@ def main():
         #humidity, temperature = 11, 22
 
         ## MQTT sending message
-        msg_info = client.publish(config['topics']['humidity'], humidity)
-        logging.debug("MQTT msg_info: %s", msg_info)
-        msg_info = client.publish(config['topics']['temperature'], temperature)
-        logging.debug("MQTT msg_info: %s", msg_info)
+        client.loop_start()
+        client.publish(config['topics']['humidity'], humidity)
+        client.publish(config['topics']['temperature'], temperature)
+        client.loop_stop()
 
         ## MQTT disconnect
         res_discon = client.disconnect()
