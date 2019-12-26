@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """dht22-mqtt.py - Read DHT22 sensor and publish values to MQTT.
 
-Reads temperature and humidity values from a DHT22 sensor (attached to Rasperry Pi) 
+Reads temperature and humidity values from a DHT22 sensor (attached to Rasperry Pi)
 and send the values to MQTT broker.
 
 Usage:
@@ -114,9 +114,9 @@ def main():
         #humidity, temperature = 11, 22
 
         ## MQTT sending message
-        msg_info: MQTTMessageInfo = client.publish(config['topics']['humidity'], humidity)
+        msg_info = client.publish(config['topics']['humidity'], humidity)
         logging.debug("MQTT msg_info: %s", msg_info)
-        msg_info: MQTTMessageInfo = client.publish(config['topics']['temperature'], temperature)
+        msg_info = client.publish(config['topics']['temperature'], temperature)
         logging.debug("MQTT msg_info: %s", msg_info)
 
         ## MQTT disconnect
