@@ -7,6 +7,7 @@
   "dht_gpio": 6,
   "topics": {
     "temperature": "/musca/dht22/temperature",
-    "humidity": "/musca/dht22/humidity"
+    "humidity": "/musca/dht22/humidity",
+    "pressure": "/musca/bmp180/pressure"
   }
 }

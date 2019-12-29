@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""dht22-mqtt.py - Read DHT22 sensor data and publish values to MQTT.
+"""bmp180-mqtt.py - Read BMP180 sensor data and publish values to MQTT.
 
-Reads temperature and humidity values from a DHT22 sensor
+Reads temperature and barometric pressure values from a BMP180 sensor
 (attached to Rasperry Pi) and send the values to MQTT broker.
 
 Usage:
-  dht22-mqtt.py <config.json>
-  dht22-mqtt.py -h | --help
-  dht22-mqtt.py --version
+  bmp180-mqtt.py <config.json>
+  bmp180-mqtt.py -h | --help
+  bmp180-mqtt.py --version
 
 Arguments:
   config.json	  Configuration file in JSON format.
@@ -44,9 +44,9 @@ import paho.mqtt.client as mqtt
 from docopt import docopt
 from paho.mqtt.client import MQTTMessageInfo
 
-__version__ = "1.2"
-__date__ = "2018-12-18"
-__updated__ = "2019-12-26"
+__version__ = "1.0"
+__date__ = "2018-12-19"
+__updated__ = "2019-12-29"
 __author__ = "Ixtalo"
 __license__ = "AGPL-3.0+"
 __email__ = "ixtalo@gmail.com"
@@ -65,20 +65,20 @@ __script_dir = os.path.dirname(os.path.realpath(__file__))
 
 try:
     # noinspection PyUnresolvedReferences
-    import Adafruit_DHT as dht
+    import Adafruit_BMP.BMP085 as BMP085
 except ModuleNotFoundError:
     print("DHT library only works on a Raspi!")
 
 
-def read_sensor(gpio_pin):
-    h, t = dht.read_retry(dht.DHT22, gpio_pin)
-    h = round(h, 1)
-    t = round(t, 1)
-    return h, t
+def read_sensor():
+    sensor = BMP085.BMP085()
+    t = sensor.read_temperature()
+    p = sensor.read_pressure()
+    return t, p
 
 
 def main():
-    arguments = docopt(__doc__, version="raspi-dht22-mqtt %s (%s)" % (__version__, __updated__))
+    arguments = docopt(__doc__, version="raspi-bmp180-mqtt %s (%s)" % (__version__, __updated__))
     # print(arguments)
 
     ## setup logging
@@ -112,13 +112,12 @@ def main():
         logging.error("Could not connect to MQTT broker! (%d, %s)", res_con, mqtt.error_string(res_con))
     else:
         ## sensor reading
-        humidity, temperature = read_sensor(config['dht_gpio'])
-        #humidity, temperature = 11, 22
+        temperature, pressure = read_sensor()
 
         ## MQTT sending message
         client.loop_start()
-        client.publish(config['topics']['humidity'], humidity)
         client.publish(config['topics']['temperature'], temperature)
+        client.publish(config['topics']['pressure'], pressure)
         client.loop_stop()
 
         ## MQTT disconnect

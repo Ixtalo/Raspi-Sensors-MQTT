@@ -1,3 +1,4 @@
 docopt
 paho-mqtt==1.5
 Adafruit-DHT==1.4.0
+Adafruit-BMP==1.5.4
