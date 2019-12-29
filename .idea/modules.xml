@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Raspi-DHT22-MQTT/.idea/Raspi-DHT22-MQTT.iml" filepath="$PROJECT_DIR$/../Raspi-DHT22-MQTT/.idea/Raspi-DHT22-MQTT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Raspi-Sensors-MQTT.iml" filepath="$PROJECT_DIR$/.idea/Raspi-Sensors-MQTT.iml" />
     </modules>
   </component>
 </project>

@@ -1,3 +1,3 @@
-# RasPi-DHT22-MQTT
+# RasPi-Sensors-MQTT
 
-Reads temperature and humidity values from a DHT22 sensor (attached to Rasperry Pi) and send the values to MQTT broker.
+Send the values from sensors attached to Rasperry Pi to MQTT broker.
