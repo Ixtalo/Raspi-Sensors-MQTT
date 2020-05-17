@@ -44,9 +44,9 @@ import paho.mqtt.client as mqtt
 from docopt import docopt
 from paho.mqtt.client import MQTTMessageInfo
 
-__version__ = "1.2"
+__version__ = "1.2.1"
 __date__ = "2018-12-18"
-__updated__ = "2019-12-26"
+__updated__ = "2020-05-17"
 __author__ = "Ixtalo"
 __license__ = "AGPL-3.0+"
 __email__ = "ixtalo@gmail.com"
@@ -72,8 +72,10 @@ except ModuleNotFoundError:
 
 def read_sensor(gpio_pin):
     h, t = dht.read_retry(dht.DHT22, gpio_pin)
-    h = round(h, 1)
-    t = round(t, 1)
+    if h is not None:
+        h = round(h, 1)
+    if t is not None:
+        t = round(t, 1)
     return h, t
 
 
